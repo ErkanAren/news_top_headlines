@@ -16,20 +16,31 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/headlineImageIV"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:scaleType="matrix"
+                android:src="@drawable/news_temp_image"
+                app:layout_constraintBottom_toTopOf="@+id/headlineTV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
             <TextView
                 android:id="@+id/headlineTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/headline"
-                android:layout_margin="20dp"
+                android:layout_margin="10dp"
                 android:padding="20dp"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/publishedAtTV"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/headlineImageIV"
                 />
             <TextView
                 android:id="@+id/publishedAtTV"

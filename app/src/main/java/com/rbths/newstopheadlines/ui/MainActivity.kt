@@ -2,6 +2,7 @@ package com.rbths.newstopheadlines.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,10 +34,11 @@ class MainActivity : AppCompatActivity() {
         //we are going to call the the headlines
         mViewModel.getHeadlines()
 
-        mViewModel.sourcesLiveData.observe(this) { articlesResponse ->
+        mViewModel.articlesLiveData.observe(this) { articlesResponse ->
             if(articlesResponse.status == "ok"){
                 articlesList.clear()
                 if(!articlesResponse.articles.isNullOrEmpty()) {
+                    Log.i("mytag","articlesResponse.articles: ${articlesResponse.articles}")
                     //the articles were sorted but I added this code to sort them since it was in the requirements of
                     articlesList.addAll(articlesResponse.articles.sortedBy { Utils.getLongFromISO8601(it.publishedAt) }.reversed())
                 }
@@ -46,7 +48,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        articlesAdapter = ArticlesAdapter(articlesList)
+        articlesAdapter = ArticlesAdapter(this,articlesList)
         articlesRecyclerView.setLayoutManager(
             LinearLayoutManager(
                 this,
