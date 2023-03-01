@@ -14,8 +14,8 @@ import javax.security.auth.callback.Callback
 
 class MainViewModel: ViewModel() {
 
-    private val _sourcesLiveData = MutableLiveData<ArticlesResponse>()
-    val sourcesLiveData: LiveData<ArticlesResponse> = _sourcesLiveData
+    private val _articlesLiveData = MutableLiveData<ArticlesResponse>()
+    val articlesLiveData: LiveData<ArticlesResponse> = _articlesLiveData
 
     private var sourcesRepo : SourcesRepository//= SearchRepository.instance()
 
@@ -28,7 +28,7 @@ class MainViewModel: ViewModel() {
             retrofit2.Callback<ArticlesResponse> {
             override fun onResponse(call: Call<ArticlesResponse>, response: Response<ArticlesResponse>) {
                 if(response.isSuccessful && response.body()!=null){
-                    _sourcesLiveData.value = response.body()
+                    _articlesLiveData.value = response.body()
                 }
             }
 

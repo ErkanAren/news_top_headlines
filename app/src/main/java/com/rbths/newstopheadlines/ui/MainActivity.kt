@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rbths.newstopheadlines.R
 import com.rbths.newstopheadlines.adapters.ArticlesAdapter
 import com.rbths.newstopheadlines.model.Article
+import com.rbths.newstopheadlines.utils.Utils
 import com.rbths.newstopheadlines.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -29,13 +30,16 @@ class MainActivity : AppCompatActivity() {
         articlesRecyclerView = findViewById(R.id.articlesRV)
         setupRecyclerView()
 
+        //we are going to call the the headlines
         mViewModel.getHeadlines()
 
         mViewModel.sourcesLiveData.observe(this) { articlesResponse ->
             if(articlesResponse.status == "ok"){
                 articlesList.clear()
-                if(!articlesResponse.articles.isNullOrEmpty())
-                    articlesList.addAll(articlesResponse.articles)
+                if(!articlesResponse.articles.isNullOrEmpty()) {
+                    //the articles were sorted but I added this code to sort them since it was in the requirements of
+                    articlesList.addAll(articlesResponse.articles.sortedBy { Utils.getLongFromISO8601(it.publishedAt) }.reversed())
+                }
                 articlesAdapter.notifyDataSetChanged()
             }
         }

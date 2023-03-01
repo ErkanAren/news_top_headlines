@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">News Top Headlines</string>
     <string name="headline">Headline</string>
+    <string name="date">Date</string>
 </resources>
