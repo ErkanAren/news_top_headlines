@@ -6,14 +6,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.rbths.newstopheadlines.R
+import com.rbths.newstopheadlines.model.Article
 import com.rbths.newstopheadlines.model.Source
 
-class SourcesAdapter(sourcesList: MutableList<Source>): RecyclerView.Adapter<SourcesAdapter.SourceViewHolder>() {
+class ArticlesAdapter(sourcesList: MutableList<Article>): RecyclerView.Adapter<ArticlesAdapter.SourceViewHolder>() {
 
-    private var sourcesList= mutableListOf<Source>()
+    private var articleList= mutableListOf<Article>()
 
     init {
-        this.sourcesList = sourcesList
+        this.articleList = sourcesList
     }
     class SourceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var headlineTV : TextView
@@ -31,12 +32,12 @@ class SourcesAdapter(sourcesList: MutableList<Source>): RecyclerView.Adapter<Sou
     }
 
     override fun onBindViewHolder(holder: SourceViewHolder, position: Int) {
-        val source = sourcesList[position]
+        val article = articleList[position]
 
-        holder.headlineTV.text = source.name
+        holder.headlineTV.text = article.title
     }
 
     override fun getItemCount(): Int {
-        return if (sourcesList != null) sourcesList.size else 0
+        return if (articleList != null) articleList.size else 0
     }
 }
