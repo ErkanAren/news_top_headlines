@@ -1,11 +1,10 @@
 package com.rbths.newstopheadlines.network
 
-import android.content.Context
-import com.google.gson.JsonElement
 import com.rbths.newstopheadlines.model.ArticlesResponse
 import retrofit2.Call
+import retrofit2.Response
 
-class SourcesRepository {
+class ArticlesRepository : ArticlesRepositoryInterface {
     lateinit var service: ApiGET
 
     init {
@@ -13,17 +12,17 @@ class SourcesRepository {
         service = retrofit.getRetrofitGenerator().create(ApiGET::class.java)
     }
 
-    fun getSources(): Call<ArticlesResponse> {
+    override fun getSources(): Call<ArticlesResponse> {
         return service.getSources()
     }
 
     companion object {
-        private var sInstance: SourcesRepository? = null
+        private var sInstance: ArticlesRepository? = null
 
-        fun instance(): SourcesRepository {
+        fun instance(): ArticlesRepository {
             if (sInstance == null) {
-                synchronized(SourcesRepository) {
-                    sInstance = SourcesRepository()
+                synchronized(ArticlesRepository) {
+                    sInstance = ArticlesRepository()
                 }
             }
             return sInstance!!
