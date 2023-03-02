@@ -17,12 +17,10 @@ class MainViewModel: ViewModel() {
     private val _articlesLiveData = MutableLiveData<ArticlesResponse>()
     val articlesLiveData: LiveData<ArticlesResponse> = _articlesLiveData
 
-    private var sourcesRepo : SourcesRepository//= SearchRepository.instance()
+    var sourcesRepo : SourcesRepository =
+        SourcesRepository.instance()//= SearchRepository.instance()
 
 
-    init {
-        sourcesRepo = SourcesRepository.instance()
-    }
     fun getHeadlines(){
         sourcesRepo.getSources().enqueue(object: Callback,
             retrofit2.Callback<ArticlesResponse> {
