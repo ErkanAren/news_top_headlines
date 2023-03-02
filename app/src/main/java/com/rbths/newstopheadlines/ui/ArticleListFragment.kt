@@ -1,27 +1,79 @@
 package com.rbths.newstopheadlines.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.rbths.newstopheadlines.R
+import com.rbths.newstopheadlines.adapters.ArticlesAdapter
+import com.rbths.newstopheadlines.databinding.FragmentArticleListBinding
+import com.rbths.newstopheadlines.model.Article
+import com.rbths.newstopheadlines.utils.Utils
+import com.rbths.newstopheadlines.viewmodel.MainViewModel
 
 
 class ArticleListFragment : Fragment() {
 
+    private var _binding: FragmentArticleListBinding? = null
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
+
+    lateinit var mViewModel: MainViewModel
+    lateinit var articlesRecyclerView: RecyclerView
+    lateinit var articlesAdapter: ArticlesAdapter
+
+    var articlesList = mutableListOf<Article>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        mViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
 
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_article_list, container, false)
+        _binding = FragmentArticleListBinding.inflate(inflater, container, false)
+        val view = binding.root
+
+        articlesRecyclerView = view.findViewById(R.id.articlesRV)
+        setupRecyclerView()
+
+        //we are going to call the the headlines
+        mViewModel.getHeadlines()
+
+        //articles will be called after getHeadlines returns a successful response
+        mViewModel.articlesLiveData.observe(viewLifecycleOwner) { articlesResponse ->
+            if(articlesResponse.status == "ok"){
+                articlesList.clear()
+                if(!articlesResponse.articles.isNullOrEmpty()) {
+                    Log.i("mytag","articlesResponse.articles: ${articlesResponse.articles}")
+                    //the articles were sorted but I added this code to sort them since it was in the requirements of
+                    articlesList.addAll(articlesResponse.articles.sortedBy { Utils.getLongFromISO8601(it.publishedAt) }.reversed())
+                }
+                articlesAdapter.notifyDataSetChanged()
+            }
+        }
+        return view
     }
 
 
+    private fun setupRecyclerView() {
+        articlesAdapter = ArticlesAdapter(requireContext(),articlesList)
+        articlesRecyclerView.layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+        articlesRecyclerView.adapter = articlesAdapter
+    }
 }

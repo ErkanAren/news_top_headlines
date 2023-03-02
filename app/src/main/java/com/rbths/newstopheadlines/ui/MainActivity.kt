@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         //we are going to call the the headlines
         mViewModel.getHeadlines()
 
+        //articles will be called after getHeadlines returns a successful response
         mViewModel.articlesLiveData.observe(this) { articlesResponse ->
             if(articlesResponse.status == "ok"){
                 articlesList.clear()

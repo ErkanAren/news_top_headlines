@@ -78,8 +78,6 @@ class ApiGETTest {
 
         assertThat(response.body()!!).isInstanceOf(ArticlesResponse::class.java)
 
-
-
     }
 
     @Test
