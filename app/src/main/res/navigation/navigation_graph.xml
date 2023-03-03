@@ -12,11 +12,21 @@
         tools:layout="@layout/fragment_article_list" >
         <action
             android:id="@+id/action_articleListFragment_to_articleReadFragment"
-            app:destination="@id/articleReadFragment" />
+            app:destination="@id/articleReadFragment" >
+            <argument
+                android:name="article"
+                app:argType="com.rbths.newstopheadlines.model.Article"
+                />
+
+        </action>
     </fragment>
     <fragment
         android:id="@+id/articleReadFragment"
         android:name="com.rbths.newstopheadlines.ui.ArticleReadFragment"
         android:label="fragment_article_read"
-        tools:layout="@layout/fragment_article_read" />
+        tools:layout="@layout/fragment_article_read" >
+        <argument
+            android:name="article"
+            app:argType="com.rbths.newstopheadlines.model.Article" />
+    </fragment>
 </navigation>

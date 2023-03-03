@@ -1,7 +1,10 @@
 package com.rbths.newstopheadlines.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Source(
     @SerializedName("id") val id : String?,
     @SerializedName("name") val name : String?,
@@ -9,5 +12,5 @@ data class Source(
     @SerializedName("url") val url : String?,
     @SerializedName("language") val language : String?,
     @SerializedName("country") val country : String?
-    )
+    ) : Parcelable
 

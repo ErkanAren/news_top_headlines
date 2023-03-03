@@ -1,7 +1,10 @@
 package com.rbths.newstopheadlines.model
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Article(
     @Json(name = "source") val source: Source?,
     @Json(name = "author") val author: String?,
@@ -11,4 +14,4 @@ data class Article(
     @Json(name = "urlToImage") val urlToImage: String?,
     @Json(name = "publishedAt") val publishedAt: String?,
     @Json(name = "content")val content: String?
-)
+) : Parcelable

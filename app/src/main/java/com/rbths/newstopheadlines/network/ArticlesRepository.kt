@@ -5,7 +5,7 @@ import retrofit2.Call
 import retrofit2.Response
 
 class ArticlesRepository : ArticlesRepositoryInterface {
-    lateinit var service: ApiGET
+    var service: ApiGET
 
     init {
         val retrofit = RetrofitGenerator()

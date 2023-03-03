@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rbths.newstopheadlines.R
@@ -56,7 +57,6 @@ class ArticleListFragment : Fragment() {
             if(articlesResponse.status == "ok"){
                 articlesList.clear()
                 if(!articlesResponse.articles.isNullOrEmpty()) {
-                    Log.i("mytag","articlesResponse.articles: ${articlesResponse.articles}")
                     //the articles were sorted but I added this code to sort them since it was in the requirements of
                     articlesList.addAll(articlesResponse.articles.sortedBy { Utils.getLongFromISO8601(it.publishedAt) }.reversed())
                 }
@@ -68,7 +68,13 @@ class ArticleListFragment : Fragment() {
 
 
     private fun setupRecyclerView() {
-        articlesAdapter = ArticlesAdapter(requireContext(),articlesList)
+        //the clicked item of our RecyclerView will be returned here
+        articlesAdapter = ArticlesAdapter(requireContext(),articlesList){ clickedArticle ->
+            val action = ArticleListFragmentDirections.actionArticleListFragmentToArticleReadFragment(clickedArticle)
+            findNavController().navigate(action)
+
+            Log.i("mytag","article: $clickedArticle")
+        }
         articlesRecyclerView.layoutManager = LinearLayoutManager(
             requireContext(),
             LinearLayoutManager.VERTICAL,
