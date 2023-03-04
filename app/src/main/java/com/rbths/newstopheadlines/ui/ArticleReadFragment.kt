@@ -27,6 +27,7 @@ class ArticleReadFragment : Fragment() {
     val args : ArticleReadFragmentArgs by navArgs()
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -39,6 +40,7 @@ class ArticleReadFragment : Fragment() {
 
         // Inflate the layout for this fragment
         _binding = FragmentArticleReadBinding.inflate(inflater, container, false)
+
 
 
         val article = args.article
