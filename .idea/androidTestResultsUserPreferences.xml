@@ -31,15 +31,33 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="-1367254833">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="R52M608BZSH" value="120" />
+                  <entry key="Tests" value="360" />
+                  <entry key="samsung&#10; SM-T510" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-1209404040">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
                 <map>
+                  <entry key="57UDU17222001091" value="120" />
                   <entry key="CLCDU18B12000208" value="120" />
                   <entry key="Duration" value="90" />
                   <entry key="HUAWEI&#10; COL-L29" value="120" />
+                  <entry key="HUAWEI&#10; PRA-LX1" value="120" />
+                  <entry key="R52M608BZSH" value="120" />
                   <entry key="Tests" value="360" />
+                  <entry key="samsung&#10; SM-T510" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -87,15 +105,35 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="587954782">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="57UDU17222001091" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="HUAWEI&#10; PRA-LX1" value="120" />
+                  <entry key="R52M608BZSH" value="120" />
+                  <entry key="Tests" value="360" />
+                  <entry key="samsung&#10; SM-T510" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="668698148">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
                 <map>
+                  <entry key="57UDU17222001091" value="120" />
                   <entry key="CLCDU18B12000208" value="120" />
                   <entry key="Duration" value="90" />
                   <entry key="HUAWEI&#10; COL-L29" value="120" />
+                  <entry key="HUAWEI&#10; PRA-LX1" value="120" />
+                  <entry key="R52M608BZSH" value="120" />
                   <entry key="Tests" value="360" />
+                  <entry key="samsung&#10; SM-T510" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>

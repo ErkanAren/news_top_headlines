@@ -20,8 +20,8 @@
             <ImageView
                 android:id="@+id/headlineImageIV"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:scaleType="matrix"
+                android:layout_height="120dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/news_temp_image"
                 app:layout_constraintBottom_toTopOf="@+id/headlineTV"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -72,7 +72,7 @@ class ApiGETTest {
             """.trimIndent())
         mockWebServer.enqueue(mockResponse)
 
-        val response = myApiService.getSources().execute()
+        val response = myApiService.getArticles("test").execute()
 
         assertThat(response.isSuccessful).isTrue()
 
@@ -90,7 +90,7 @@ class ApiGETTest {
             """.trimIndent())
         mockWebServer.enqueue(mockResponse)
 
-        val response = myApiService.getSources().execute()
+        val response = myApiService.getArticles("test").execute()
 
         assertThat(response.isSuccessful).isFalse()
         assertThat(response.errorBody()).isNotNull()

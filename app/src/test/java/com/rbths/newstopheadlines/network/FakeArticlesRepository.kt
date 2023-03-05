@@ -1,5 +1,6 @@
 package com.rbths.newstopheadlines.network
 
+import com.rbths.newstopheadlines.BuildConfig
 import com.rbths.newstopheadlines.model.ArticlesResponse
 import io.mockk.mockk
 import okhttp3.mockwebserver.MockResponse
@@ -25,7 +26,7 @@ class FakeArticlesRepository:ArticlesRepositoryInterface {
 
         myApiService = retrofit.create(ApiGET::class.java)
     }
-    override fun getSources(): Call<ArticlesResponse> {
+    override fun getArticles(): Call<ArticlesResponse> {
         val mockResponse = MockResponse()
             .setResponseCode(200)
             .setBody("""
@@ -59,7 +60,7 @@ class FakeArticlesRepository:ArticlesRepositoryInterface {
             """.trimIndent())
         mockWebServer.enqueue(mockResponse)
 
-        val response = myApiService.getSources()
+        val response = myApiService.getArticles("test")
         return response
     }
 }

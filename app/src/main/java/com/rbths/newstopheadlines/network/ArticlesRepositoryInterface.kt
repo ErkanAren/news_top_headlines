@@ -5,5 +5,5 @@ import retrofit2.Call
 import retrofit2.Response
 
 interface ArticlesRepositoryInterface {
-    fun getSources(): Call<ArticlesResponse>
+    fun getArticles(): Call<ArticlesResponse>
 }

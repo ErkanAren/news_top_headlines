@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.rbths.newstopheadlines.BuildConfig
+
 import com.rbths.newstopheadlines.R
 import com.rbths.newstopheadlines.adapters.ArticlesAdapter
 import com.rbths.newstopheadlines.databinding.FragmentArticleListBinding
@@ -49,12 +51,15 @@ class ArticleListFragment : Fragment() {
         articlesRecyclerView = view.findViewById(R.id.articlesRV)
         setupRecyclerView()
 
+        binding.newsProviderTitleTV.text = BuildConfig.SOURCE_NAME
 
         //articles will be filled after getHeadlines returns a successful response, getHeadlines is first called in SplashFragment
         mViewModel.articlesLiveData.observe(viewLifecycleOwner) { articlesResponse ->
             if(articlesResponse.status == "ok"){
+                // we clear the articles list before we add new articles so it shows only the new ones
                 articlesList.clear()
                 if(!articlesResponse.articles.isNullOrEmpty()) {
+                    Log.i("mytag","articlesResponse: $articlesResponse")
                     //the articles were sorted but I added this code to sort them since it was in the requirements of
                     articlesList.addAll(articlesResponse.articles.sortedBy { Utils.getLongFromISO8601(it.publishedAt) }.reversed())
                 }
@@ -77,5 +82,10 @@ class ArticleListFragment : Fragment() {
             false
         )
         articlesRecyclerView.adapter = articlesAdapter
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding=null
     }
 }

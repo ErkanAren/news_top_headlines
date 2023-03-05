@@ -55,10 +55,10 @@ class ArticlesAdapter(private val context: Context, sourcesList: MutableList<Art
         holder.headlineTV.text = article.title
 
         // show published date of the article
-        holder.publishedAtTV.text = utils.getDateStringFromISO8601(article.publishedAt)
+        holder.publishedAtTV.text = Utils.getDateStringFromISO8601(article.publishedAt)
 
         // SHow the image of the article
-        Glide.with(context).load(article.urlToImage).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.headlineImageIV)
+        Glide.with(context).load(article.urlToImage).error(R.drawable.news_temp_image).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.headlineImageIV)
     }
 
     override fun getItemCount(): Int {

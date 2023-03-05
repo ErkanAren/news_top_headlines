@@ -25,11 +25,12 @@ class SplashFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    // we will show our splash screen before the app opens
+    // we will show our splash screen before the app opens using a handler
     private val handlerSplash = Handler(Looper.getMainLooper())
 
     private lateinit var mViewModel: MainViewModel
 
+    // Biometric Authentication
     private lateinit var executor: Executor
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
@@ -51,19 +52,22 @@ class SplashFragment : Fragment() {
         val view = binding.root
 
 
-
+        //executor for our Biometric Authentication
         executor = ContextCompat.getMainExecutor(requireContext())
 
-        //biometric authentication result callback
+
+        /**
+         * Biometric authentication result callback
+         */
         biometricPrompt = BiometricPrompt(this, executor,
             object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationError(errorCode: Int,
                                                    errString: CharSequence) {
                     super.onAuthenticationError(errorCode, errString)
 
-                    //call headlines
+                    //call headlines so they are shown in ArticlesListFragment
                     mViewModel.getHeadlines()
-
+                    // Opens the ArticlesListFragment after a second
                     handlerSplash.postDelayed({
                         val action = SplashFragmentDirections.actionSplashFragmentToArticleListFragment()
                         findNavController().navigate(action)
@@ -77,7 +81,7 @@ class SplashFragment : Fragment() {
 
                     //call headlines
                     mViewModel.getHeadlines()
-
+                    // Opens the ArticlesListFragment
                     val action = SplashFragmentDirections.actionSplashFragmentToArticleListFragment()
                     findNavController().navigate(action)
 
@@ -85,11 +89,13 @@ class SplashFragment : Fragment() {
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
-
                 }
             })
 
 
+        /**
+         * Build the authentication prompt
+         */
         promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle("Biometric login for my app")
             .setSubtitle("Log in using your biometric credential")
@@ -97,7 +103,9 @@ class SplashFragment : Fragment() {
             .build()
 
 
-
+        /**
+         * Show the authentication prompt
+         */
         biometricPrompt.authenticate(promptInfo)
 
 

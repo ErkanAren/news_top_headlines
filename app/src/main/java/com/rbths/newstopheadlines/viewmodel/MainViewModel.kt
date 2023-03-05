@@ -19,18 +19,19 @@ class MainViewModel(repository: ArticlesRepositoryInterface = ArticlesRepository
     private val _articlesLiveData = MutableLiveData<ArticlesResponse>()
     val articlesLiveData: LiveData<ArticlesResponse> = _articlesLiveData
 
-    var sourcesRepo = repository
+    var articlesRepo = repository
 
-
+    /**
+     * It returns the headlines of the selected source and adds them to the articlesLiveData as ArticlesResponse
+     */
     fun getHeadlines() = viewModelScope.launch {
-        sourcesRepo.getSources().enqueue(object: Callback,
+        articlesRepo.getArticles().enqueue(object: Callback,
             retrofit2.Callback<ArticlesResponse> {
             override fun onResponse(call: Call<ArticlesResponse>, response: Response<ArticlesResponse>) {
                 if(response.isSuccessful && response.body()!=null){
                     _articlesLiveData.value = response.body()
                 }
             }
-
             override fun onFailure(call: Call<ArticlesResponse>, t: Throwable) {
             }
 
