@@ -49,10 +49,8 @@ class ArticleListFragment : Fragment() {
         articlesRecyclerView = view.findViewById(R.id.articlesRV)
         setupRecyclerView()
 
-        //we are going to call the the headlines
-        mViewModel.getHeadlines()
 
-        //articles will be called after getHeadlines returns a successful response
+        //articles will be filled after getHeadlines returns a successful response, getHeadlines is first called in SplashFragment
         mViewModel.articlesLiveData.observe(viewLifecycleOwner) { articlesResponse ->
             if(articlesResponse.status == "ok"){
                 articlesList.clear()
@@ -72,8 +70,6 @@ class ArticleListFragment : Fragment() {
         articlesAdapter = ArticlesAdapter(requireContext(),articlesList){ clickedArticle ->
             val action = ArticleListFragmentDirections.actionArticleListFragmentToArticleReadFragment(clickedArticle)
             findNavController().navigate(action)
-
-            Log.i("mytag","article: $clickedArticle")
         }
         articlesRecyclerView.layoutManager = LinearLayoutManager(
             requireContext(),

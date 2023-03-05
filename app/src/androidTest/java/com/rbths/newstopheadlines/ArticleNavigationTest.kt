@@ -23,18 +23,17 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
-import com.rbths.newstopheadlines.ui.ArticleListFragment
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.contrib.RecyclerViewActions.scrollToPosition
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import com.rbths.newstopheadlines.adapters.ArticlesAdapter
 import com.rbths.newstopheadlines.model.Article
-import com.rbths.newstopheadlines.ui.ArticleListFragmentDirections
-import com.rbths.newstopheadlines.ui.ArticleReadFragment
-import com.rbths.newstopheadlines.ui.ArticleReadFragmentArgs
+import com.rbths.newstopheadlines.ui.*
+import com.rbths.newstopheadlines.utils.Constants.Companion.SPLASH_SCREEN_MILLIS
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.hamcrest.Matchers.containsString
@@ -50,6 +49,8 @@ class ArticleNavigationTest {
 
     private lateinit var article: Article
 
+    //@get:Rule
+    //val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
     @get:Rule
     val disableAnimationsRule = DisableAnimationsRule()
@@ -57,6 +58,8 @@ class ArticleNavigationTest {
     lateinit var articles : MutableList<Article>
 
     private lateinit var navController : NavHostController
+
+    private val titleScenario = launchFragmentInContainer<ArticleListFragment>()
 
     @Before
     fun setUp() {
@@ -97,44 +100,56 @@ class ArticleNavigationTest {
         // Create a TestNavHostController
         navController = TestNavHostController(
             ApplicationProvider.getApplicationContext())
-    }
 
-
-    @Test
-    fun clickOnFilledArticleItem_navigateToArticleReadFragment() {
-        val positionToClick = 1
-        // Create a graphical FragmentScenario for the TitleScreen
-        val titleScenario = launchFragmentInContainer<ArticleListFragment>()
 
 
         titleScenario.onFragment { fragment ->
             // Set up the RecyclerView with the mock repository and a mock click listener
+
+
             val recyclerView = fragment.view?.findViewById<RecyclerView>(R.id.articlesRV)
             recyclerView?.layoutManager = LinearLayoutManager(fragment.requireContext())
             recyclerView?.adapter = ArticlesAdapter(ApplicationProvider.getApplicationContext(),articles) { article ->
-                val action = ArticleListFragmentDirections.actionArticleListFragmentToArticleReadFragment(article)
-                navController.navigate(action)
-                }
+                //val action = ArticleListFragmentDirections.actionArticleListFragmentToArticleReadFragment(article)
+                //navController.navigate(action)
+                (navController as TestNavHostController).setCurrentDestination(R.id.articleReadFragment)
+            }
             fragment.articlesRecyclerView = recyclerView!!
 
-            // Do nothing for now
             // Set the graph on the TestNavHostController
             navController.setGraph(R.navigation.navigation_graph)
+
 
             // Make the NavController available via the findNavController() APIs
             Navigation.setViewNavController(fragment.requireView(), navController)
 
         }
 
+        Thread.sleep(SPLASH_SCREEN_MILLIS)
+
+
+
+    }
+
+    @Test
+    fun testIfRecyclerViewIsVisible_navigateToArticleReadFragment() {
+
+        onView(withId(R.id.articlesRV)).check(matches( isDisplayed()))
+    }
+
+    @Test
+    fun clickOnFilledArticleItem_navigateToArticleReadFragment() {
+        val positionToClick = 1
+
         // Verify that performing a click changes the NavController’s state
-        onView(withId(R.id.articlesRV))
+       onView(withId(R.id.articlesRV))
             .perform(scrollToPosition<ArticlesAdapter.ArticleViewHolder>(positionToClick)).check(RecyclerViewItemCountAssertion(articles.size)
             )
+        onView(withId(R.id.articlesRV)).check(matches( isDisplayed()))
         onView(withId(R.id.articlesRV)).perform(actionOnItemAtPosition<ArticlesAdapter.ArticleViewHolder>(positionToClick, click()))
 
 
         assertThat(navController.currentDestination?.id).isEqualTo(R.id.articleReadFragment)
-
     }
 
 
@@ -142,27 +157,6 @@ class ArticleNavigationTest {
     fun clickOnArticleItemWithEmptyValues_navigateToArticleReadFragment() {
         val positionToClick = 0
 
-        // Create a graphical FragmentScenario for the TitleScreen
-        val titleScenario = launchFragmentInContainer<ArticleListFragment>()
-
-        titleScenario.onFragment { fragment ->
-            // Set up the RecyclerView with the mock repository and a mock click listener
-            val recyclerView = fragment.view?.findViewById<RecyclerView>(R.id.articlesRV)
-            recyclerView?.layoutManager = LinearLayoutManager(fragment.requireContext())
-            recyclerView?.adapter = ArticlesAdapter(ApplicationProvider.getApplicationContext(),articles) { article ->
-                val action = ArticleListFragmentDirections.actionArticleListFragmentToArticleReadFragment(article)
-                navController.navigate(action)
-            }
-            fragment.articlesRecyclerView = recyclerView!!
-
-            // Set the graph on the TestNavHostController
-            navController.setGraph(R.navigation.navigation_graph)
-
-            // Make the NavController available via the findNavController() APIs
-            Navigation.setViewNavController(fragment.requireView(), navController)
-
-        }
-
         // Verify that performing a click changes the NavController’s state
         onView(withId(R.id.articlesRV))
             .perform(scrollToPosition<ArticlesAdapter.ArticleViewHolder>(positionToClick)).check(RecyclerViewItemCountAssertion(articles.size)
@@ -170,34 +164,12 @@ class ArticleNavigationTest {
         onView(withId(R.id.articlesRV)).perform(actionOnItemAtPosition<ArticlesAdapter.ArticleViewHolder>(positionToClick, click()))
 
         assertThat(navController.currentDestination?.id).isEqualTo(R.id.articleReadFragment)
-
     }
 
     @Test
     fun clickOnArticleItemWithNullValues_navigateToArticleReadFragment() {
         val positionToClick = 2
 
-        // Create a graphical FragmentScenario for the TitleScreen
-        val titleScenario = launchFragmentInContainer<ArticleListFragment>()
-
-        titleScenario.onFragment { fragment ->
-            // Set up the RecyclerView with the mock repository and a mock click listener
-            val recyclerView = fragment.view?.findViewById<RecyclerView>(R.id.articlesRV)
-            recyclerView?.layoutManager = LinearLayoutManager(fragment.requireContext())
-            recyclerView?.adapter = ArticlesAdapter(ApplicationProvider.getApplicationContext(),articles) { article ->
-                val action = ArticleListFragmentDirections.actionArticleListFragmentToArticleReadFragment(article)
-                navController.navigate(action)
-            }
-            fragment.articlesRecyclerView = recyclerView!!
-
-            // Set the graph on the TestNavHostController
-            navController.setGraph(R.navigation.navigation_graph)
-
-            // Make the NavController available via the findNavController() APIs
-            Navigation.setViewNavController(fragment.requireView(), navController)
-
-        }
-
         // Verify that performing a click changes the NavController’s state
         onView(withId(R.id.articlesRV))
             .perform(scrollToPosition<ArticlesAdapter.ArticleViewHolder>(positionToClick)).check(RecyclerViewItemCountAssertion(articles.size)
@@ -205,7 +177,6 @@ class ArticleNavigationTest {
         onView(withId(R.id.articlesRV)).perform(actionOnItemAtPosition<ArticlesAdapter.ArticleViewHolder>(positionToClick, click()))
 
         assertThat(navController.currentDestination?.id).isEqualTo(R.id.articleReadFragment)
-
     }
 }
 

@@ -3,20 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/articleListFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/articleListFragment"
         android:name="com.rbths.newstopheadlines.ui.ArticleListFragment"
         android:label="fragment_article_list"
-        tools:layout="@layout/fragment_article_list" >
+        tools:layout="@layout/fragment_article_list">
         <action
             android:id="@+id/action_articleListFragment_to_articleReadFragment"
-            app:destination="@id/articleReadFragment" >
+            app:destination="@id/articleReadFragment">
             <argument
                 android:name="article"
-                app:argType="com.rbths.newstopheadlines.model.Article"
-                />
+                app:argType="com.rbths.newstopheadlines.model.Article" />
 
         </action>
     </fragment>
@@ -24,9 +23,21 @@
         android:id="@+id/articleReadFragment"
         android:name="com.rbths.newstopheadlines.ui.ArticleReadFragment"
         android:label="fragment_article_read"
-        tools:layout="@layout/fragment_article_read" >
+        tools:layout="@layout/fragment_article_read">
         <argument
             android:name="article"
             app:argType="com.rbths.newstopheadlines.model.Article" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.rbths.newstopheadlines.ui.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_splashFragment_to_articleListFragment"
+            app:destination="@id/articleListFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/navigation_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
