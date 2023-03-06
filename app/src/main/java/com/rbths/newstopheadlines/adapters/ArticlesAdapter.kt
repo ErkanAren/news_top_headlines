@@ -11,7 +11,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rbths.newstopheadlines.R
 import com.rbths.newstopheadlines.databinding.ArticleItemBinding
-import com.rbths.newstopheadlines.databinding.FragmentArticleListBinding
 import com.rbths.newstopheadlines.model.Article
 import com.rbths.newstopheadlines.utils.Utils
 
@@ -19,13 +18,10 @@ class ArticlesAdapter(private val context: Context, articlesList: MutableList<Ar
 
     private var articleList= mutableListOf<Article>()
 
-    private val utils = Utils()
-
-
     init {
         this.articleList = articlesList
     }
-    class ArticleViewHolder(val binding: ArticleItemBinding, onItemClicked: (Int) -> Unit ) : RecyclerView.ViewHolder(binding.root) {
+    class ArticleViewHolder(binding: ArticleItemBinding, onItemClicked: (Int) -> Unit ) : RecyclerView.ViewHolder(binding.root) {
         var headlineTV : TextView
         var publishedAtTV : TextView
         var headlineImageIV : ImageView
@@ -58,7 +54,12 @@ class ArticlesAdapter(private val context: Context, articlesList: MutableList<Ar
         holder.headlineTV.text = article.title
 
         // show published date of the article
-        holder.publishedAtTV.text = Utils.getDateStringFromISO8601(article.publishedAt)
+        if(article.publishedAt.isNullOrEmpty()){
+            holder.publishedAtTV.visibility = View.GONE
+        }else{
+            holder.publishedAtTV.text = Utils.getDateStringFromISO8601(article.publishedAt)
+        }
+
 
         // SHow the image of the article
         Glide.with(context).load(article.urlToImage).error(R.drawable.news_temp_image).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.headlineImageIV)

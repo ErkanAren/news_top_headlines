@@ -7,11 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rbths.newstopheadlines.R
-import com.rbths.newstopheadlines.databinding.FragmentArticleListBinding
 import com.rbths.newstopheadlines.databinding.FragmentArticleReadBinding
-import com.rbths.newstopheadlines.model.ArticlesResponse
 
 
 class ArticleReadFragment : Fragment() {
@@ -22,15 +19,10 @@ class ArticleReadFragment : Fragment() {
     private val binding get() = _binding!!
 
 
-
-
     val args : ArticleReadFragmentArgs by navArgs()
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -42,13 +34,13 @@ class ArticleReadFragment : Fragment() {
         _binding = FragmentArticleReadBinding.inflate(inflater, container, false)
 
 
-
         val article = args.article
-        binding.articleReadTitleTV.text = article.title
-        binding.articleReadDescriptionTV.text = article.description
-        binding.articleReadContentTV.text = article.content
-        // Show the image of the article
-        Glide.with(requireContext()).load(article.urlToImage).into(binding.articleReadImageTV)
+        //check the article values, if they are empty or null show a message
+        binding.articleReadTitleTV.text = if(article.title.isNullOrEmpty()) getString(R.string.empty_title_warning) else article.title
+        binding.articleReadDescriptionTV.text = if(article.description.isNullOrEmpty()) getString(R.string.empty_description_warning) else article.description
+        binding.articleReadContentTV.text = if(article.content.isNullOrEmpty()) getString(R.string.empty_content_warning) else article.content
+        // Show the image of the article, show no image if the url is empty or broken
+        Glide.with(requireContext()).load(article.urlToImage).error(R.drawable.no_image).into(binding.articleReadImageTV)
 
 
         return  binding.root

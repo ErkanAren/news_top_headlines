@@ -14,15 +14,22 @@ class UtilsTest{
         assertThat(result).isEqualTo(0)
     }
 
+
     @Test
     fun `the ISIO8601 string of date returns the correct long value in getLongFromISO8601`(){
+        val result = Utils.getLongFromISO8601("2022-10-25T10:41:24Z")
+        assertThat(result).isEqualTo(1666694484000)
+    }
+
+    @Test
+    fun `the ISIO8601 string of date with millis returns the correct long value in getLongFromISO8601`(){
         val result = Utils.getLongFromISO8601("2023-03-01T14:22:27.0000000Z")
         assertThat(result).isEqualTo(1677680547000)
     }
 
     @Test
     fun `the wrong format string of date returns 0 in getLongFromISO8601`(){
-        val result = Utils.getLongFromISO8601("2023-03-01T14:22:27")
+        val result = Utils.getLongFromISO8601("2023-03-01T14:22")
         assertThat(result).isEqualTo(0)
     }
 
@@ -49,7 +56,7 @@ class UtilsTest{
 
     @Test
     fun `the wrong format string of date returns empty string in getDateStringFromISO8601`(){
-        val result = Utils.getDateStringFromISO8601("2023-03-01T14:22:27")
+        val result = Utils.getDateStringFromISO8601("2023-03-01T14:22")
         assertThat(result).isEqualTo("")
     }
 

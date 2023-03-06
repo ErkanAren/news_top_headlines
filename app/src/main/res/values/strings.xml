@@ -3,4 +3,9 @@
     <string name="headline">Headline</string>
     <string name="date">Date</string>
     <string name="logo">logo</string>
+    <string name="please_restart_the_app_and_use_biometric_authentication_to_login">Please restart the app and use biometric authentication to login!</string>
+    <string name="empty_title_warning">The title of the article is not available.</string>
+    <string name="empty_description_warning">The description of the selected article is not available.</string>
+    <string name="empty_content_warning">The content of the selected article is not available.</string>
+
 </resources>

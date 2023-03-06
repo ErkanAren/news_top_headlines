@@ -1,6 +1,5 @@
 package com.rbths.newstopheadlines.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +11,6 @@ import javax.security.auth.callback.Callback
 import kotlinx.coroutines.launch
 import androidx.lifecycle.viewModelScope
 import com.rbths.newstopheadlines.network.ArticlesRepositoryInterface
-import com.rbths.newstopheadlines.network.RetrofitGenerator
 
 class MainViewModel(repository: ArticlesRepositoryInterface = ArticlesRepository.instance()): ViewModel() {
 

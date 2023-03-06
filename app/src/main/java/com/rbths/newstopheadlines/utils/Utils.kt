@@ -1,6 +1,5 @@
 package com.rbths.newstopheadlines.utils
 
-import android.util.Log
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*

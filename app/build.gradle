@@ -27,11 +27,11 @@ android {
             buildConfigField("String","SOURCE_ID",'"bbc-news"')
             buildConfigField("String","SOURCE_NAME",'"BBC News"')
         }
-        bloomberg {
+        bild {
             dimension "sourceMode"
-            applicationIdSuffix ".bloomberg"
-            buildConfigField("String","SOURCE_ID",'"bloomberg"')
-            buildConfigField("String","SOURCE_NAME",'"Bloomberg"')
+            applicationIdSuffix ".bild"
+            buildConfigField("String","SOURCE_ID",'"bild"')
+            buildConfigField("String","SOURCE_NAME",'"Bild"')
         }
 
 
@@ -45,6 +45,8 @@ android {
         }
         all {
             buildConfigField("String","API_KEY",'"8238c1be0009439f9d590439a68cdc86"')
+            buildConfigField("String","SOURCE_ID",'"bbc-news"')
+            buildConfigField("String","SOURCE_NAME",'"BBC News"')
         }
 
     }
