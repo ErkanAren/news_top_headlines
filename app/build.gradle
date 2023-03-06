@@ -45,8 +45,6 @@ android {
         }
         all {
             buildConfigField("String","API_KEY",'"8238c1be0009439f9d590439a68cdc86"')
-            buildConfigField("String","SOURCE_ID",'"bbc-news"')
-            buildConfigField("String","SOURCE_NAME",'"BBC News"')
         }
 
     }
