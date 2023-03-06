@@ -24,15 +24,17 @@ android {
         bbc {
             dimension "sourceMode"
             applicationIdSuffix ".bbc"
-            buildConfigField("String","SOURCE_ID","\"bbc-news\"")
-            buildConfigField("String","SOURCE_NAME","\"BBC News\"")
+            buildConfigField("String","SOURCE_ID",'"bbc-news"')
+            buildConfigField("String","SOURCE_NAME",'"BBC News"')
         }
         bloomberg {
             dimension "sourceMode"
             applicationIdSuffix ".bloomberg"
-            buildConfigField("String","SOURCE_ID","\"bloomberg\"")
-            buildConfigField("String","SOURCE_NAME","\"Bloomberg\"")
+            buildConfigField("String","SOURCE_ID",'"bloomberg"')
+            buildConfigField("String","SOURCE_NAME",'"Bloomberg"')
         }
+
+
     }
 
 
@@ -41,9 +43,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-
+        all {
+            buildConfigField("String","API_KEY",'"8238c1be0009439f9d590439a68cdc86"')
+        }
 
     }
+
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

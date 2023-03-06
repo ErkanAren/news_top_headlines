@@ -98,7 +98,7 @@ class ArticleNavigationTest {
                 //navController.navigate(action)
                 (navController as TestNavHostController).setCurrentDestination(R.id.articleReadFragment)
             }
-            fragment.articlesRecyclerView = recyclerView!!
+            //fragment.articlesRecyclerView = recyclerView!!
 
             // Set the graph on the TestNavHostController
             navController.setGraph(R.navigation.navigation_graph)

@@ -1,12 +1,17 @@
 package com.rbths.newstopheadlines.ui
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -65,14 +70,25 @@ class SplashFragment : Fragment() {
                                                    errString: CharSequence) {
                     super.onAuthenticationError(errorCode, errString)
 
-                    //call headlines so they are shown in ArticlesListFragment
-                    mViewModel.getHeadlines()
-                    // Opens the ArticlesListFragment after a second
-                    handlerSplash.postDelayed({
-                        val action = SplashFragmentDirections.actionSplashFragmentToArticleListFragment()
-                        findNavController().navigate(action)
-                    },
-                        SPLASH_SCREEN_MILLIS)
+                    if(errorCode == BiometricPrompt.ERROR_USER_CANCELED){
+                        //user canceled the authentication procedure
+                        //do nothing
+                    }
+                    else if(errorCode == BiometricPrompt.ERROR_NEGATIVE_BUTTON){
+                        //negative button is clicked
+                        //do nothing
+                    }
+                    else {
+                        //call headlines so they are shown in ArticlesListFragment
+                        mViewModel.getHeadlines()
+                        // Opens the ArticlesListFragment after a second
+                        handlerSplash.postDelayed({
+                            val action = SplashFragmentDirections.actionSplashFragmentToArticleListFragment()
+                            findNavController().navigate(action)
+                        },
+                            SPLASH_SCREEN_MILLIS)
+                    }
+
                 }
 
                 override fun onAuthenticationSucceeded(
@@ -99,7 +115,7 @@ class SplashFragment : Fragment() {
         promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle("Biometric login for my app")
             .setSubtitle("Log in using your biometric credential")
-            .setNegativeButtonText("Use account password")
+            .setNegativeButtonText("No,thanks")
             .build()
 
 
@@ -111,6 +127,8 @@ class SplashFragment : Fragment() {
 
         return view
     }
+
+
 
 
     override fun onDestroy() {

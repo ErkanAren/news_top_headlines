@@ -1,10 +1,8 @@
 package com.rbths.newstopheadlines.adapters
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -12,19 +10,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rbths.newstopheadlines.R
+import com.rbths.newstopheadlines.databinding.ArticleItemBinding
+import com.rbths.newstopheadlines.databinding.FragmentArticleListBinding
 import com.rbths.newstopheadlines.model.Article
-import com.rbths.newstopheadlines.model.Source
 import com.rbths.newstopheadlines.utils.Utils
 
-class ArticlesAdapter(private val context: Context, sourcesList: MutableList<Article>, private val onItemClicked: (Article) -> Unit ): RecyclerView.Adapter<ArticlesAdapter.ArticleViewHolder>() {
+class ArticlesAdapter(private val context: Context, articlesList: MutableList<Article>, private val onItemClicked: (Article) -> Unit ): RecyclerView.Adapter<ArticlesAdapter.ArticleViewHolder>() {
 
     private var articleList= mutableListOf<Article>()
 
     private val utils = Utils()
+
+
     init {
-        this.articleList = sourcesList
+        this.articleList = articlesList
     }
-    class ArticleViewHolder(itemView: View, onItemClicked: (Int) -> Unit ) : RecyclerView.ViewHolder(itemView) {
+    class ArticleViewHolder(val binding: ArticleItemBinding, onItemClicked: (Int) -> Unit ) : RecyclerView.ViewHolder(binding.root) {
         var headlineTV : TextView
         var publishedAtTV : TextView
         var headlineImageIV : ImageView
@@ -39,10 +40,12 @@ class ArticlesAdapter(private val context: Context, sourcesList: MutableList<Art
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         // create a new view
-        val layoutInflater = LayoutInflater.from(parent.context)
-            .inflate(R.layout.source_item, parent, false)
 
-        val viewHolder = ArticleViewHolder(layoutInflater){ position ->
+        val binding = ArticleItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        //val layoutInflater = LayoutInflater.from(parent.context)
+        //    .inflate(R.layout.article_item, parent, false)
+
+        val viewHolder = ArticleViewHolder(binding){ position ->
             onItemClicked(articleList[position])
         }
         return viewHolder

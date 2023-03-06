@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.rbths.newstopheadlines.BuildConfig
 
 import com.rbths.newstopheadlines.R
@@ -28,7 +28,6 @@ class ArticleListFragment : Fragment() {
     private val binding get() = _binding!!
 
     lateinit var mViewModel: MainViewModel
-    lateinit var articlesRecyclerView: RecyclerView
     lateinit var articlesAdapter: ArticlesAdapter
 
     var articlesList = mutableListOf<Article>()
@@ -48,7 +47,6 @@ class ArticleListFragment : Fragment() {
         _binding = FragmentArticleListBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        articlesRecyclerView = view.findViewById(R.id.articlesRV)
         setupRecyclerView()
 
         binding.newsProviderTitleTV.text = BuildConfig.SOURCE_NAME
@@ -59,7 +57,6 @@ class ArticleListFragment : Fragment() {
                 // we clear the articles list before we add new articles so it shows only the new ones
                 articlesList.clear()
                 if(!articlesResponse.articles.isNullOrEmpty()) {
-                    Log.i("mytag","articlesResponse: $articlesResponse")
                     //the articles were sorted but I added this code to sort them since it was in the requirements of
                     articlesList.addAll(articlesResponse.articles.sortedBy { Utils.getLongFromISO8601(it.publishedAt) }.reversed())
                 }
@@ -76,12 +73,13 @@ class ArticleListFragment : Fragment() {
             val action = ArticleListFragmentDirections.actionArticleListFragmentToArticleReadFragment(clickedArticle)
             findNavController().navigate(action)
         }
-        articlesRecyclerView.layoutManager = LinearLayoutManager(
+        binding.articlesRV.layoutManager = GridLayoutManager(
             requireContext(),
+            resources.getInteger(R.integer.articles_recyclerview_columns),
             LinearLayoutManager.VERTICAL,
             false
         )
-        articlesRecyclerView.adapter = articlesAdapter
+        binding.articlesRV.adapter = articlesAdapter
     }
 
     override fun onDestroy() {
