@@ -1,6 +1,7 @@
 package com.rbths.newstopheadlines.network
 
 import com.rbths.newstopheadlines.BuildConfig
+import com.rbths.newstopheadlines.model.Article
 import com.rbths.newstopheadlines.model.ArticlesResponse
 import io.mockk.mockk
 import okhttp3.mockwebserver.MockResponse
@@ -62,5 +63,9 @@ class FakeArticlesRepository:ArticlesRepositoryInterface {
 
         val response = myApiService.getArticles("test")
         return response
+    }
+
+    override suspend fun saveArticlesToLocal(articleList: List<Article>) {
+
     }
 }

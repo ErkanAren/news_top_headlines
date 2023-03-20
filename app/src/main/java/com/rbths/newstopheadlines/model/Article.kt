@@ -1,12 +1,17 @@
 package com.rbths.newstopheadlines.model
 
 import android.os.Parcelable
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
+@Entity(tableName = "article")
 data class Article(
-    @Json(name = "source") val source: Source?,
+    @PrimaryKey(autoGenerate = true) val idArticle: Int,
+    @Embedded @Json(name = "source") val source: Source?,
     @Json(name = "author") val author: String?,
     @Json(name = "title") val title: String?,
     @Json(name = "description") val description: String?,

@@ -32,6 +32,7 @@ class ArticlesAdapter(private val context: Context, articlesList: MutableList<Ar
 
             itemView.setOnClickListener { onItemClicked(adapterPosition) }
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
@@ -44,6 +45,7 @@ class ArticlesAdapter(private val context: Context, articlesList: MutableList<Ar
         val viewHolder = ArticleViewHolder(binding){ position ->
             onItemClicked(articleList[position])
         }
+
         return viewHolder
     }
 

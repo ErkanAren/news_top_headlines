@@ -17,6 +17,8 @@ import com.rbths.newstopheadlines.databinding.FragmentArticleListBinding
 import com.rbths.newstopheadlines.model.Article
 import com.rbths.newstopheadlines.utils.Utils
 import com.rbths.newstopheadlines.viewmodel.MainViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 
 class ArticleListFragment : Fragment() {

@@ -1,6 +1,7 @@
 package com.rbths.newstopheadlines.model
 
 import android.os.Parcelable
+import androidx.room.Entity
 import com.squareup.moshi.Json
 import kotlinx.parcelize.Parcelize
 

@@ -11,6 +11,9 @@ import javax.security.auth.callback.Callback
 import kotlinx.coroutines.launch
 import androidx.lifecycle.viewModelScope
 import com.rbths.newstopheadlines.network.ArticlesRepositoryInterface
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 
 class MainViewModel(repository: ArticlesRepositoryInterface = ArticlesRepository.instance()): ViewModel() {
 
@@ -22,12 +25,17 @@ class MainViewModel(repository: ArticlesRepositoryInterface = ArticlesRepository
     /**
      * It returns the headlines of the selected source and adds them to the articlesLiveData as ArticlesResponse
      */
-    fun getHeadlines() = viewModelScope.launch {
+    fun getHeadlines() = viewModelScope.launch{
         articlesRepo.getArticles().enqueue(object: Callback,
             retrofit2.Callback<ArticlesResponse> {
             override fun onResponse(call: Call<ArticlesResponse>, response: Response<ArticlesResponse>) {
                 if(response.isSuccessful && response.body()!=null){
                     _articlesLiveData.value = response.body()
+
+                    viewModelScope.launch {
+                        articlesRepo.saveArticlesToLocal(response.body()?.articles!!)
+                    }
+
                 }
             }
             override fun onFailure(call: Call<ArticlesResponse>, t: Throwable) {

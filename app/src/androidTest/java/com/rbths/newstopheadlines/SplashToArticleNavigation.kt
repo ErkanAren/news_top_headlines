@@ -32,8 +32,12 @@ class SplashToArticleNavigation {
             //Set the graph on the TestNavHostController
             navController.setGraph(R.navigation.navigation_graph)
 
+
+
             // Make the NavController available via the findNavController() APIs
             Navigation.setViewNavController(fragment.requireView(), navController)
+
+
 
         }
         Truth.assertThat(navController.currentDestination?.id).isEqualTo(R.id.splashFragment)
