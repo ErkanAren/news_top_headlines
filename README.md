@@ -14,3 +14,5 @@ Story notes:
   * Biometric Authentication
 * Bonus Story 4:
   * Product Flavors
+* Added later:
+  * Room library
