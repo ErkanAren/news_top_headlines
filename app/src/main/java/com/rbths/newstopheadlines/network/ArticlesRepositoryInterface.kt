@@ -9,6 +9,10 @@ import retrofit2.Call
 interface ArticlesRepositoryInterface {
     fun getArticles(): Call<ArticlesResponse>
 
+    suspend fun getArticlesFromLocal():  List<Article>
+
+    suspend fun deleteAll()
+
     suspend fun saveArticlesToLocal(articleList:List<Article>)
 
 }

@@ -15,6 +15,7 @@ import com.rbths.newstopheadlines.R
 import com.rbths.newstopheadlines.adapters.ArticlesAdapter
 import com.rbths.newstopheadlines.databinding.FragmentArticleListBinding
 import com.rbths.newstopheadlines.model.Article
+import com.rbths.newstopheadlines.utils.Constants
 import com.rbths.newstopheadlines.utils.Utils
 import com.rbths.newstopheadlines.viewmodel.MainViewModel
 import kotlinx.coroutines.Dispatchers
@@ -54,7 +55,7 @@ class ArticleListFragment : Fragment() {
 
         //articles will be filled after getHeadlines returns a successful response, getHeadlines is first called in SplashFragment
         mViewModel.articlesLiveData.observe(viewLifecycleOwner) { articlesResponse ->
-            if(articlesResponse.status == "ok"){
+            if(articlesResponse.status == Constants.OK_STATUS){
                 // we clear the articles list before we add new articles so it shows only the new ones
                 articlesList.clear()
                 if(!articlesResponse.articles.isNullOrEmpty()) {

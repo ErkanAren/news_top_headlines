@@ -29,6 +29,14 @@ class ArticlesRepository : ArticlesRepositoryInterface {
         return service.getArticles(BuildConfig.SOURCE_ID)
     }
 
+    override suspend fun getArticlesFromLocal(): List<Article> {
+        return db.articleDao().getAll()
+    }
+
+    override suspend fun deleteAll() {
+        db.articleDao().deleteAll()
+    }
+
     override suspend fun saveArticlesToLocal(articleList: List<Article>)= withContext(Dispatchers.IO)  {
         db.articleDao().insertAll(articleList)
     }

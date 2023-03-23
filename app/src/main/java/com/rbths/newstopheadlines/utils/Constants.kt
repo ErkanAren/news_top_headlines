@@ -7,5 +7,7 @@ class Constants {
         // how many milliseconds will the splash screen wait
         const val SPLASH_SCREEN_MILLIS = 1000L
 
+        // successful string response from the api of articles
+        const val OK_STATUS = "ok"
     }
 }
